@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Анимация с canvas</title>
+</head>
+<body>
+    <canvas id="canvas" width="200" height="200"></canvas>
+    <script>
+var canvas = document.getElementById('canvas'); //  
+var ctx = canvas.getContext('2d'); 
+
+// var size = 0;
+
+// setInterval(function () {
+// ctx.clearRect(0, 0, 200, 200);
+// ctx.fillRect(0, 0, size, size);
+
+// size++;
+// if (size > 200) {
+//     size = 0;
+//     }
+// }, 30);
+
+var x = 100;
+var y = 100; 
+
+
+setInterval(function (){
+    ctx.clearRect(0, 0 , 200, 200);
+
+    drawBee(x, y);
+    x = update (x);
+    y = update (y);
+
+    ctx.strokeRect(0, 0, 200, 200);
+}, 30);
+
+var circle = function (x, y, radius, fillCircle) {
+    ctx.beginPath();
+    ctx.arc(x, y, radius, 0, Math.PI * 2, false) // "x" и "y" - координаты центра окружности, 0 - начало отрисовки.
+    if (fillCircle) {
+        ctx.fill();  // заполненный 
+    } else {
+        ctx.stroke();  // обведенный
+    }
+}
+
+var drawBee = function(x, y){
+    ctx.lineWidth = 2;
+    ctx.strokeStyle = "Black";
+    ctx.fillStyle = "Gold";
+
+    circle(x, y, 8, true);  // круг с центром в координатах x и y,с толщиной линии 2, золотого цвета заполненный
+    circle(x, y, 8, false);  // незаполненный черного цвета
+    circle(x - 5, y - 11, 5, false);
+    circle(x + 5, y - 11, 5, false);
+    circle(x - 2, y - 1, 2, false);
+    circle(x + 2, y - 1, 2, false);
+} 
+
+var update = function (coordinate) {
+    var offset = Math.random() * 4 - 2;
+    coordinate += offset;
+
+    if (coordinate > 200) {
+        coordinate = 0
+    }
+    if (coordinate < 0) {
+        coordinate = 0;
+    }
+
+    return coordinate;
+};
+
+    </script>
+</body>
+</html>
